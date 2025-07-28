@@ -1,0 +1,148 @@
+/* General Layout */
+.order-list-page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.order-list-page .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.order-list-page .header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.order-list-page .filter-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.order-list-page .filter-container select,
+.order-list-page .filter-container input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.order-list-page .filter-container select:focus,
+.order-list-page .filter-container input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Data Table */
+.order-list-page .table-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.order-list-page .table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-list-page .table th,
+.order-list-page .table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9rem;
+}
+
+.order-list-page .table th {
+  background-color: #f4f4f4;
+  font-weight: 600;
+}
+
+.order-list-page .table td {
+  background-color: #fff;
+}
+
+.order-list-page .table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.order-list-page .table .actions-button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.order-list-page .table .actions-button:hover {
+  background-color: #0056b3;
+}
+
+/* Pagination */
+.order-list-page .pagination-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.order-list-page .pagination-container button {
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.order-list-page .pagination-container button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.order-list-page .pagination-container button.disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+label{
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .order-list-page .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-list-page .filter-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .order-list-page .table {
+    font-size: 0.85rem;
+  }
+
+  .order-list-page .table th,
+  .order-list-page .table td {
+    padding: 10px 12px;
+  }
+
+  .order-list-page .pagination-container {
+    flex-direction: column;
+  }
+}

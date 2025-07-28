@@ -1,0 +1,197 @@
+h3{
+    margin-top: 50px !important; ;
+    margin-bottom: 30px !important; ;
+}
+
+.cart-table-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .cart-table-container .cart-title {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .cart-table-container .cart-table {
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  
+  .cart-table-container .expandable-content {
+    padding: 20px;
+    background-color: #fafafa;
+  }
+  
+  .cart-table-container .section-title {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #555;
+  }
+  
+  .cart-table-container .cart-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .cart-table-container .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-table-container .item-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+  }
+  
+  .cart-table-container .item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .cart-table-container .item-quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .cart-table-container .quantity-button {
+    padding: 5px 10px;
+  }
+  
+  .cart-table-container .update-button,
+  .cart-table-container .update-status-button {
+    margin-top: 15px;
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .cart-table-container .prescription-details,
+  .cart-table-container .delivery-address {
+    margin-bottom: 10px;
+  }
+  
+  .cart-table-container .prescription-image {
+    width: 100px;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .cart-table-container .status-dropdown {
+    margin-right: 10px;
+  }
+  
+  .cart-table-container .cart-status-update {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+  .cart-table-container .delivery-address-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .cart-table-container .delivery-address-table td {
+    padding: 5px 10px;
+    vertical-align: top;
+  }
+  
+  .cart-table-container .delivery-address-table td:first-child {
+    font-weight: bold;
+    width: 20%;
+    color: #333;
+  }
+  
+  
+  
+  .cart-table-container .prescription-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .cart-table-container .prescription-details-table td {
+    padding: 8px 12px;
+    vertical-align: middle;
+  }
+  
+  .cart-table-container .prescription-details-table td:first-child {
+    font-weight: bold;
+    width: 20%;
+    color: #333;
+    text-align: left;
+  }
+  
+  .cart-table-container .prescription-image-cell {
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  .cart-table-container .prescription-image {
+    max-width: 120px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  .btn{
+    margin-right: 10px;
+  }
+  
+  .cart-table-container .shipping-charge-update {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  
+  .cart-table-container .shipping-charge-input {
+    flex: 1;
+    max-width: 120px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .cart-table-container .update-shipping-button {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .cart-table-container .update-shipping-button:hover {
+    background-color: #45a049;
+  }
+  .cart-table-container a{
+    text-decoration: underline;
+  }
+
+
+  .prescription-view .img-thumbnail{
+    width: 35%;
+  }

@@ -1,0 +1,539 @@
+generate a react component using the following requirement spec. read through the spec in detail and ask question if something is not clear before starting to generate code. 
+
+follow bootstrap grid spec class names, this is for an admin portal so expected view is on a landscape desktop screen
+for any tables use DataTable from react-data-table-component library. support pagination.
+
+
+component is for Customer Detail it has the following sections
+1. Customer basic information as card - api output is given below
+2. Saved addresses list as table - api output is given below, have option to edit / delete address. On click of edit address open a popup model to list the fields with textboxes and update button. 
+3. Active Cart details - api output is given below. Order summary as a row in the table. Thought cart table is returning only one set of dict, have that inside an array with one element and represent it in a table that could be expanded. that table should contain the order summary elements as columns in each row + cart status + cart ID. When expanded, it should show Cart details, Prescription, delivery address.
+Also add an action buttons in the table to add items and update items to cart. 
+On click of add items, open a popup via sweet alert asking the product id and quantity and then call api to add to cart
+Add +/- action buttons to each cart item. On change of it, make the Update items button enabled. on click of that call update cart api.reload page after that.
+4. Uploaded prescriptions- api output is given below
+5. Reward points transactions- api output is given below
+
+6. Requested products- api output not given, generate a flask API for this based on given schema. It will return list of product ids. Call another api to load details of those products (this api output is given below). this api supports pagination, create frontend accordingly.
+7. Payment transactions - api output is not given, generate a dummy flask API for this returning dummy data. using razorpay, populate columns accordingly.
+
+All APIs given below has route followed by ?customer=<customer-id> to simulate a customer api call.
+
+Customer basic information api:
+GET /profile?customer=<customer-id>
+{
+  "coins": 1821,
+  "dob": "28-08-1998",
+  "email": "sgnmail01@gmail.com",
+  "name": "Skanda",
+  "phone": "9789090840",
+  "profilePicture": "https://d26lh6sqkii1nb.cloudfront.net/profilepic/21176_Medingen (1).jpg",
+  "theme": "light"
+}
+
+Saved address list API: 
+GET /list_addresses?customer=<customerid>
+{
+  "addresses": [
+    {
+      "address1": "asdadsjoakdaskdlkasd adkaspdkapsdpas adpkaspdkaskdkaspdkpakdpasd",
+      "default": 1,
+      "id": 2,
+      "name": "adasd",
+      "pincode": "asdas",
+      "state": "TN",
+      "type": "other"
+    },
+    {
+      "address1": "Kingsland Road, London",
+      "default": 0,
+      "id": 7,
+      "name": "Skanda Gn",
+      "pincode": "E13 9NU",
+      "state": "England",
+      "type": "home"
+    }
+  ]
+}
+
+EDIT address:
+POST /update_address?customer=<customerid>
+{"id":2,"address":{"id":2,"type":"other","name":"adasd","address1":"asdadsjoakdaskdlkasd adkaspdkapsdpas adpkaspdkaskdkaspdkpakdpasd","pincode":"600055","state":"TN"}}
+Response: 200
+
+Delete address:
+POST /delete_address
+{"id":2}
+Response 200
+
+
+
+Active Cart API:
+GET /cart/?customer=<customer-id>
+{
+  "cart": [
+    {
+      "discountPercentage": "53% less Price",
+      "discountedPrice": "Rs. 10.24",
+      "id": 33030,
+      "image": "98159_FLUMOL 650.png",
+      "manufacturer": "",
+      "name": "FLUMOL 650",
+      "originalPrice": "Rs. 22.00",
+      "prescriptionRequired": "Yes",
+      "quantity": 7
+    }
+  ],
+  "cartStatus": "confirm",
+  "cart_id": 18,
+  "deliveryAddress": {
+    "addressLine1": "asdadsjoakdaskdlkasd adkaspdkapsdpas adpkaspdkaskdkaspdkpakdpasd",
+    "addressLine2": "TN",
+    "name": "adasd",
+    "pincode": "asdas",
+    "state": "TN",
+    "type": "other"
+  },
+  "orderSummary": {
+    "itemsCount": 7,
+    "migCoins": 1821,
+    "totalAmount": "121.68",
+    "totalMRP": "Rs. 154.00",
+    "totalPercentageSaved": "53%",
+    "totalSavings": "Rs. 82.32",
+    "total_selling_price": "Rs. 71.68",
+    "total_shipping_charge": 50
+  },
+  "prescriptionDetails": {
+    "last_used_date": "",
+    "prescription_comments": "",
+    "prescription_date": "Sat, 21 Sep 2024 00:00:00 GMT",
+    "prescription_id": 32,
+    "prescription_image_url": "73766_file_1uueav",
+    "prescription_name": "Test presentation",
+    "prescription_status": "ORDER_PLACED"
+  }
+}
+
+Add to cart api:
+POST /add-to-cart?customer=<id>
+{"product_id":33169,"quantity":"1"}
+
+Update cart api
+POST /cart_update?customer=<id>
+{"quantities":"33030:9;","cart_id":18}
+
+
+
+Uploaded prescriptions
+GET /list_prescriptions
+Response
+{
+  "prescriptions": [
+    {
+      "last_used_date": "",
+      "prescription_comments": "",
+      "prescription_date": "Mon, 09 Sep 2024 00:00:00 GMT",
+      "prescription_id": 4,
+      "prescription_image_url": "01403_file_ck6n01",
+      "prescription_name": "",
+      "prescription_status": "ORDER_PLACED"
+    },
+    {
+      "last_used_date": "",
+      "prescription_comments": "",
+      "prescription_date": "Mon, 09 Sep 2024 00:00:00 GMT",
+      "prescription_id": 5,
+      "prescription_image_url": "39173_camera-1.png",
+      "prescription_name": "",
+      "prescription_status": "ORDER_PLACED"
+    },
+    {
+      "last_used_date": "",
+      "prescription_comments": "",
+      "prescription_date": "Mon, 09 Sep 2024 00:00:00 GMT",
+      "prescription_id": 6,
+      "prescription_image_url": "55509_file_z17yip",
+      "prescription_name": "",
+      "prescription_status": "ORDER_PLACED"
+    },
+    {
+      "last_used_date": "",
+      "prescription_comments": "",
+      "prescription_date": "Mon, 09 Sep 2024 00:00:00 GMT",
+      "prescription_id": 7,
+      "prescription_image_url": "05644_file_lnl090",
+      "prescription_name": "",
+      "prescription_status": "RECEIVED"
+    } 
+  ]
+}
+
+Reward points transactions api:
+summary (to be displayed in top and then the table contains the transactions) :
+GET /rewards-summary
+Response
+{
+  "available": "1821.00",
+  "expiring": "1445.00",
+  "overall": "2495.00"
+}
+
+transactions (supports pagination, modify frontend accordingly):
+GET /rewards?page=1
+Response:
+{
+  "current_page": 1,
+  "has_next": true,
+  "has_prev": false,
+  "total_pages": 2,
+  "transactions": [
+    {
+      "amount": "-84.00",
+      "date": "2024-07-26",
+      "description": "Medicines bought for order ID 120",
+      "expires": "2024-07-26",
+      "iconType": "secondary",
+      "id": 20,
+      "orderid": "120",
+      "percentage": "100%",
+      "reward": -84.0,
+      "time": "18:00:00"
+    },
+    {
+      "amount": "2600.00",
+      "date": "2024-07-26",
+      "description": "Medicines bought for order ID 119",
+      "expires": "2024-07-26",
+      "iconType": "primary",
+      "id": 19,
+      "orderid": "119",
+      "percentage": "8%",
+      "reward": 208.0,
+      "time": "12:00:00"
+    },
+    {
+      "amount": "-75.00",
+      "date": "2024-07-25",
+      "description": "Medicines bought for order ID 118",
+      "expires": "2024-07-25",
+      "iconType": "secondary",
+      "id": 18,
+      "orderid": "118",
+      "percentage": "100%",
+      "reward": -75.0,
+      "time": "17:00:00"
+    },
+    {
+      "amount": "2400.00",
+      "date": "2024-07-25",
+      "description": "Medicines bought for order ID 117",
+      "expires": "2024-07-25",
+      "iconType": "primary",
+      "id": 17,
+      "orderid": "117",
+      "percentage": "7%",
+      "reward": 168.0,
+      "time": "10:00:00"
+    },
+    {
+      "amount": "-64.00",
+      "date": "2024-07-24",
+      "description": "Medicines bought for order ID 116",
+      "expires": "2024-07-24",
+      "iconType": "secondary",
+      "id": 16,
+      "orderid": "116",
+      "percentage": "100%",
+      "reward": -64.0,
+      "time": "16:00:00"
+    },
+    {
+      "amount": "2300.00",
+      "date": "2024-07-24",
+      "description": "Medicines bought for order ID 115",
+      "expires": "2024-07-24",
+      "iconType": "primary",
+      "id": 15,
+      "orderid": "115",
+      "percentage": "6%",
+      "reward": 138.0,
+      "time": "12:00:00"
+    },
+    {
+      "amount": "-51.00",
+      "date": "2024-07-23",
+      "description": "Medicines bought for order ID 114",
+      "expires": "2024-07-23",
+      "iconType": "secondary",
+      "id": 14,
+      "orderid": "114",
+      "percentage": "100%",
+      "reward": -51.0,
+      "time": "15:00:00"
+    },
+    {
+      "amount": "21000.00",
+      "date": "2024-07-23",
+      "description": "Medicines bought for order ID 113",
+      "expires": "2024-07-23",
+      "iconType": "primary",
+      "id": 13,
+      "orderid": "113",
+      "percentage": "5%",
+      "reward": 1050.0,
+      "time": "14:00:00"
+    },
+    {
+      "amount": "-54.00",
+      "date": "2024-07-22",
+      "description": "Medicines bought for order ID 112",
+      "expires": "2024-07-22",
+      "iconType": "secondary",
+      "id": 12,
+      "orderid": "112",
+      "percentage": "100%",
+      "reward": -54.0,
+      "time": "10:00:00"
+    },
+    {
+      "amount": "1900.00",
+      "date": "2024-07-22",
+      "description": "Medicines bought for order ID 111",
+      "expires": "2024-07-22",
+      "iconType": "primary",
+      "id": 11,
+      "orderid": "111",
+      "percentage": "4%",
+      "reward": 76.0,
+      "time": "09:00:00"
+    }
+  ]
+}
+
+
+Requested products table schema with sample data in JSON format:
+[
+{"type":"table","name":"ProductRequest","database":"medingen","data":
+[
+{"id":"1","product_id":"2624","customer_id":"1","request_date":"2024-09-08 10:24:40","status":"pending"},
+{"id":"2","product_id":"2624","customer_id":"1","request_date":"2024-09-08 10:31:58","status":"pending"},
+{"id":"3","product_id":"15850","customer_id":"1","request_date":"2024-09-08 20:33:10","status":"pending"},
+{"id":"4","product_id":"11144","customer_id":"34","request_date":"2024-10-08 17:08:33","status":"pending"},
+{"id":"5","product_id":"15772","customer_id":"34","request_date":"2024-10-08 17:18:54","status":"pending"}
+]
+}
+]
+Generate the api to return this for this given customerid filtering the where clause. GET /product_requests?customer_id=<cid>
+
+Sample api code format here:
+@app.route('/api/list_addresses', methods=['GET'])
+@token_required
+def list_addresses(current_user):
+    try:
+        mysql = get_mysql_connection()
+        if not mysql:
+            return jsonify({"message": "Database connection failed"}), 500
+
+        cursor = mysql.cursor()
+
+        # Query to get the list of addresses
+        select_query = """
+        SELECT id, address1, name, pincode, state, type, `default`
+        FROM Addresses
+        WHERE customer_id = %s
+        """
+        
+        cursor.execute(select_query, (current_user,))
+        result = cursor.fetchall()
+        cursor.close()
+        mysql.close()
+
+        if result:
+            addresses = [dict(row) for row in result]
+            return jsonify({"addresses": addresses}), 200
+        else:
+            return jsonify({"addresses": [],  "message": "No addresses found"}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"message": "An error occurred while retrieving the addresses"}), 500
+
+
+Products api:
+POST /products
+{"page":1,"query":"product_id IN (19, 22)","text":""}
+Response:
+{
+  "current_page": 1,
+  "results": [
+    {
+      "composition": "ZUCLOPENTHIXOL-50MG",
+      "first_image_url": "09872_medingen-logo.jpg",
+      "lencomp": 19,
+      "product_available": 100,
+      "product_id": 19,
+      "product_name": "Zuclotrip-Acuphase 50 mg Injection 1 ml",
+      "product_pricing_new": "343.30",
+      "product_pricing_old": "390.00",
+      "product_request": 1,
+      "rc": 1,
+      "salt_name": "ZUCLOPENTHIXOL",
+      "selected_category": "injection"
+    },
+    {
+      "composition": "ZUCLOPENTHIXOL-50MG",
+      "first_image_url": "09872_medingen-logo.jpg",
+      "lencomp": 19,
+      "product_available": 100,
+      "product_id": 22,
+      "product_name": "Zuclotrip-Acuphase 50 mg Injection 1 ml",
+      "product_pricing_new": "343.30",
+      "product_pricing_old": "390.00",
+      "product_request": 1,
+      "rc": 1,
+      "salt_name": "ZUCLOPENTHIXOL",
+      "selected_category": "injection"
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 1
+}
+
+
+
+Similar to this component, generate a fully functional Categories Management component with add/edit/delete functionality.
+
+It should contain a data table to list this data with pagination, the API doesnt need to have pagination, so only have pagination in the loaded data. 
+Have a Add category button and on click, open a Model with all these fields except category_id (this is autogenerated)
+On add and edit category, there should be input file handler for uploading files. There is already a function to upload files via presigned url and get the file name. you need to call that. This is the function 
+uploadFile(file, prefix) - it takes in the file object and prefix as string, the prefix should be "categories", the function will return a string that should be sent to the API backend for the category_image_url column. 
+
+Also generate python flask APIs for the same. Sample for the python flask API is below. The sample is for getting only the names of the categories. This API you are generating should be all_categories and generate one for edit and delete respectively. 
+
+This is how Category table looks like
+"category_id","category_name","category_description","category_image_url","category_datetime_created","display_name","show_on_home"
+"1","tablet","Medicines for pain relief","tablet.png","2023-01-01 08:30:00","Tablet","1"
+"2","injection","Medicines for bacterial infections","injection.png","2023-01-02 09:45:00","Injection","2"
+"3","drop","Medicines for stomach and digestion","drop.png","2023-01-03 11:00:00","Drop","3"
+"4","ointment","Medicines for allergy relief","ointment.png","2023-04-01 09:00:00","Ointment","4"
+"5","syrup","Medicines for bacterial infections","syrup.png","2023-05-02 10:15:00","Syrup","5"
+"6","cream","Medicines for gastric health","cream.png","2023-06-05 11:30:00","Cream","6"
+"7","gel","Medicines for inflammation relief","gel.png","2023-07-01 09:30:00","Gel","7"
+"8","insulin","Medicines for bacterial infections","image-21.png","2023-08-02 10:45:00","Insulin","0"
+
+@app.route('/api/categories', methods=['GET'])
+def get_categories():
+    mysql = get_mysql_connection()
+    with mysql.cursor() as cursor:
+        query = "SELECT category_name FROM Category"
+        cursor.execute(query)
+        categories = cursor.fetchall()
+        categories_list = []
+        for c in categories:
+            categories_list.append(c["category_name"])
+
+    return jsonify(categories_list)
+
+Similarly, Generate a fully functional component called Salt Code  with Add/Edit/Delete/List functionality. Refer to the table structure given below when something is entered in the searchbox, the filtering should happen based on composition code, description, compoisition, and packaging and not based on url. 
+
+Generate the flask APIs also for that like how you generated earlier for add, edit, delete, view. Use the same format, I have attached that sample also below.
+
+This is how composition_code table looks like in database:
+"id","composition_code","composition","description_url","rc","packaging"
+"1","MIG1","Test composition","file_name.txt","0","10 Tablets"
+
+
+@app.route('/api/all_categories', methods=['GET'])
+def get_all_categories():
+    mysql = get_mysql_connection()
+    try:
+        with mysql.cursor() as cursor:
+            query = """
+                SELECT category_id, category_name, category_description, category_image_url,
+                       category_datetime_created, display_name, show_on_home
+                FROM Category
+                ORDER BY category_datetime_created DESC
+            """
+            cursor.execute(query)
+            categories = cursor.fetchall()
+        return jsonify(categories), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        mysql.close()
+
+@app.route('/api/add_category', methods=['POST'])
+def add_category():
+    data = request.get_json()
+    required_fields = ['category_name', 'category_description', 'category_image_url', 'display_name', 'show_on_home']
+    if not all(field in data for field in required_fields):
+        return jsonify({"error": "Missing required fields"}), 400
+
+    try:
+        mysql = get_mysql_connection()
+        with mysql.cursor() as cursor:
+            query = """
+                INSERT INTO Category (category_name, category_description, category_image_url,
+                                      category_datetime_created, display_name, show_on_home)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(query, (
+                data['category_name'],
+                data['category_description'],
+                data['category_image_url'],
+                datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'),
+                data['display_name'],
+                data['show_on_home']
+            ))
+            mysql.commit()
+        return jsonify({"message": "Category added successfully"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        mysql.close()
+
+@app.route('/api/edit_category/<int:category_id>', methods=['PUT'])
+def edit_category(category_id):
+    data = request.get_json()
+    fields = ['category_name', 'category_description', 'category_image_url', 'display_name', 'show_on_home']
+    update_fields = {field: data[field] for field in fields if field in data}
+
+    if not update_fields:
+        return jsonify({"error": "No fields to update"}), 400
+
+    try:
+        mysql = get_mysql_connection()
+        with mysql.cursor() as cursor:
+            set_clause = ", ".join([f"{field} = %s" for field in update_fields.keys()])
+            values = list(update_fields.values())
+            values.append(category_id)
+            query = f"""
+                UPDATE Category
+                SET {set_clause}
+                WHERE category_id = %s
+            """
+            cursor.execute(query, values)
+            mysql.commit()
+            if cursor.rowcount == 0:
+                return jsonify({"error": "Category not found"}), 404
+        return jsonify({"message": "Category updated successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        mysql.close()
+
+@app.route('/api/delete_category/<int:category_id>', methods=['DELETE'])
+def delete_category(category_id):
+    try:
+        mysql = get_mysql_connection()
+        with mysql.cursor() as cursor:
+            query = "DELETE FROM Category WHERE category_id = %s"
+            cursor.execute(query, (category_id,))
+            mysql.commit()
+            if cursor.rowcount == 0:
+                return jsonify({"error": "Category not found"}), 404
+        return jsonify({"message": "Category deleted successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        mysql.close()

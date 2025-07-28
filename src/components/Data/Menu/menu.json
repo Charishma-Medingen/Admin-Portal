@@ -1,0 +1,179 @@
+{
+    "menu": [
+        {
+            "name": "Dashboard",
+            "routerLink": ["dashboard"],
+            "identifier": "Dashboard",
+            "iconClass": "icofont-home fs-5",
+            "breadcrumbMessage": "Welcome to Analytics Dashboard.",
+            "isCategory": false,
+            "isApp": false,
+            "children": []
+        },
+        {
+            "name": "Products",
+            "routerLink": [""],
+            "identifier": "Products",
+            "iconClass": "icofont-truck-loaded fs-5",
+            "breadcrumbMessage": "",
+            "isCategory": false,
+            "isApp": false,
+            "children": [
+                {
+                    "name": "Product List",
+                    "routerLink": ["product-list"],
+                    "identifier": "Product List",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                },
+                {
+                    "name": "Product Add",
+                    "routerLink": ["product-Add"],
+                    "identifier": "Product Add",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                },
+                {
+                    "name": "Salt Code",
+                    "routerLink": ["composition-code"],
+                    "identifier": "Salt Code",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "Categories",
+            "routerLink": [""],
+            "identifier": "Categories",
+            "iconClass": "icofont-chart-flow fs-5",
+            "breadcrumbMessage": "",
+            "isCategory": false,
+            "isApp": true,
+            "children": [
+                {
+                    "name": "Categories List",
+                    "routerLink": ["categories-list"],
+                    "identifier": "Categories List",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "Customers",
+            "routerLink": [""],
+            "identifier": "Customers",
+            "iconClass": "icofont-funky-man fs-5",
+            "breadcrumbMessage": "",
+            "isCategory": false,
+            "isApp": true,
+            "children": [
+                {
+                    "name": "Customers List",
+                    "routerLink": ["customer-list"],
+                    "identifier": "Customers List",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                },
+                {
+                    "name": "Customer Notifications",
+                    "routerLink": ["customer-notifications"],
+                    "identifier": "Customer Notifications",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                },
+                {
+                    "name": "Orders List",
+                    "routerLink": ["orders-list"],
+                    "identifier": "Orders List",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                },
+                {
+                    "name": "Coupons",
+                    "routerLink": ["coupons-list"],
+                    "identifier": "Coupons",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "Blogs",
+            "routerLink": [""],
+            "identifier": "Blogs",
+            "iconClass": "icofont-chart-flow fs-5",
+            "breadcrumbMessage": "",
+            "isCategory": false,
+            "isApp": true,
+            "children": [
+                {
+                    "name": "Blog categories",
+                    "routerLink": ["blog-categories-list"],
+                    "identifier": "Blog categories",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                },
+                {
+                    "name": "Blog list",
+                    "routerLink": ["blog-list"],
+                    "identifier": "Blog list",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "Notifications",
+            "routerLink": [""],
+            "identifier": "Notifications",
+            "iconClass": "icofont-chart-flow fs-5",
+            "breadcrumbMessage": "",
+            "isCategory": false,
+            "isApp": true,
+            "children": [
+                {
+                    "name": "Admin notifications",
+                    "routerLink": ["notifications-list"],
+                    "identifier": "Admin notifications",
+                    "iconClass": "",
+                    "breadcrumbMessage": "",
+                    "isCategory": false,
+                    "isApp": false,
+                    "children": []
+                }
+            ]
+        }
+    ]
+}

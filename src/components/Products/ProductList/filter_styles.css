@@ -1,0 +1,4 @@
+.query-builder.qb-lite .group--header:hover .group--header .group--drag-handler, .query-builder.qb-lite .group--header:hover .group--header .group--actions, .query-builder.qb-lite .group--header:not(:hover) .group--drag-handler, .query-builder.qb-lite .group--header:not(:hover) .group--actions, .query-builder.qb-lite .rule_group:not(:hover) .group--drag-handler, .query-builder.qb-lite .rule_group:not(:hover) .group--actions 
+{
+    opacity: 1 !important;
+}
