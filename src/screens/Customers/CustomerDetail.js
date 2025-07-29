@@ -435,6 +435,11 @@ const CustomerDetail = () => {
       },
     });
 
+    // 🛑 If user cancelled, exit early
+  if (!prescription_id.isConfirmed) {
+    return;
+  }
+
     console.log(
       "Prescription ID:",
       prescription[prescription_id.value].prescription_id
@@ -1485,6 +1490,8 @@ const CustomerDetail = () => {
       fetchPatientRecords();
     }, []);
 
+
+
     return (
       <div className="col-md-12 mt-4">
         <h3>Patient Records</h3>
@@ -2137,6 +2144,20 @@ export const CartTable = ({
   const [selectedStatus, setSelectedStatus] = useState("");
   const shippingChargeRef = useRef();
   const fileInputRef = useRef(null);
+  const [selectedCart, setSelectedCart] = useState(null);
+
+const handleProductClick = (item) => {
+  setSelectedCart({...item});
+};
+
+useEffect(() => {
+  if (selectedCart?.cartStatus) {
+    setSelectedStatus(selectedCart.cartStatus.toLowerCase());
+  } else {
+    setSelectedStatus(""); // fallback
+  }
+}, [selectedCart]);
+
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
@@ -2157,8 +2178,9 @@ const handleFileChange = async (event) => {
     if (!uploadedFileName) {
       throw new Error("Upload failed");
     }
-
-    alert("File uploaded successfully: " + uploadedFileName);
+    if (uploadedFileName){
+      alert("File uploaded successfully: " + uploadedFileName);
+    }
   } catch (error) {
     console.error("Upload error:", error);
     alert("File upload failed.");
@@ -2184,15 +2206,32 @@ const handleFileChange = async (event) => {
     }
   }, [expandedCartId]);
 
-  const handleExpandToggleRow = (toggle, row) => {
-    if (toggle) {
-      setExpandedCartId(row.cart_id);
-    }
-  };
+  // const handleExpandToggleRow = (toggle, row) => {
+  //   if (toggle) {
+  //     setExpandedCartId(row.cart_id);
+  //   }
+  // };
+
+  // const handleExpandRow = (row) => {
+  //   setExpandedCartId(row.cart_id);
+  // };
+
+
+  const handleCartRowClick = (row) => {
+  setSelectedCart({ ...row }); // ensure selectedCart is set
+  handleExpandRow(row); // if you have separate logic
+};
 
   const handleExpandRow = (row) => {
-    setExpandedCartId(row.cart_id);
-  };
+  setSelectedCart({ ...row }); // Set selected cart on row click
+  // Existing logic to expand/collapse row
+  if (expandedCartId === row.cart_id) {
+    setExpandedCartId(null); // collapse
+  } else {
+    setExpandedCartId(row.cart_id); // expand
+  }
+};
+
 
   const handleAddItem = (type) => {
     Swal.fire({
@@ -2210,8 +2249,6 @@ const handleFileChange = async (event) => {
       },
     });
   };
-
-
 
   const handleUpdateQuantity = (id, newQuantity) => {
     const updatedItems = cartItems.map((item) =>
@@ -2249,6 +2286,16 @@ const handleFileChange = async (event) => {
       Swal.fire("Error", "Shipping charge must be greater than 0", "error");
     }
   };
+
+
+  const handleExpandToggleRow = (expanded, row) => {
+  setExpandedCartId(expanded ? row.cart_id : null);
+
+  if (expanded) {
+    setSelectedCart({ ...row }); // Set the selected cart
+  }
+};
+
 
   return (
     <div className="cart-table-container">
@@ -2298,7 +2345,7 @@ const handleFileChange = async (event) => {
 
         expandableRows
         expandOnRowClicked
-        onRowClicked={handleExpandRow}
+        onRowClicked={handleCartRowClick}
         onRowExpandToggled={handleExpandToggleRow}
         expandableRowExpanded={(row) => expandedCartId === row.cart_id}
         expandableRowsComponent={({ data }) => {
@@ -2306,6 +2353,7 @@ const handleFileChange = async (event) => {
             data.cartStatus === "active" ||
             data.cartStatus === "confirm" ||
             data.cartStatus === "pending_confirm";
+            console.log("Data: ",data);
 
           return (
             <div className="expandable-content">
@@ -2491,9 +2539,16 @@ const handleFileChange = async (event) => {
                   <option value="delivered">Delivered</option>
                   <option value="cancelled">Cancelled</option>
                 </select>
-                <Button
+                {/* <Button
                   className="update-status-button"
                   onClick={() => handleStatusUpdate(data.cart_id)}
+                >
+                  Update Status
+                </Button> */}
+                <Button
+                  className="update-status-button"
+                  onClick={() => handleStatusUpdate(selectedCart.cart_id)}
+                  disabled={!selectedCart}
                 >
                   Update Status
                 </Button>
