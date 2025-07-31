@@ -2112,6 +2112,8 @@ const CustomerDetail = () => {
         updateDeliveryAddress={updateDeliveryAddress}
         addresses={addresses}
         prescriptions={prescriptions}
+        customer_id={customerId}
+        fetchPrescriptions={fetchPrescriptions}
       />
 
       <RewardsSection />
@@ -2137,6 +2139,8 @@ export const CartTable = ({
   updateDeliveryAddress,
   addresses,
   prescriptions,
+  customer_id,
+  fetchPrescriptions
 }) => {
   const [expandedCartId, setExpandedCartId] = useState(null);
   const [cartItems, setCartItems] = useState([]);
@@ -2173,13 +2177,14 @@ const handleFileChange = async (event) => {
   try {
     const prefix = "prescription";
 
-    const uploadedFileName = await uploadFile(file, prefix);
+    const uploadedFileName = await uploadFile(file, prefix,customer_id);
 
     if (!uploadedFileName) {
       throw new Error("Upload failed");
     }
     if (uploadedFileName){
       alert("File uploaded successfully: " + uploadedFileName);
+      await fetchPrescriptions();
     }
   } catch (error) {
     console.error("Upload error:", error);
@@ -2234,21 +2239,23 @@ const handleFileChange = async (event) => {
 
 
   const handleAddItem = (type) => {
-    Swal.fire({
-      title: type === "cart" ? "Add New Cart" : "Add Item to Cart",
-      html:
-        '<input id="productId" class="swal2-input" placeholder="Product ID">' +
-        '<input id="quantity" class="swal2-input" placeholder="Quantity">',
-      focusConfirm: false,
-      preConfirm: () => {
-        const productId = document.getElementById("productId").value;
-        const quantity = document.getElementById("quantity").value;
-        if (productId && quantity) {
-          handleAddItemToCart(productId, quantity);
-        }
-      },
-    });
-  };
+  Swal.fire({
+    title: type === "cart" ? "Add New Cart" : "Add Item to Cart",
+    html:
+      '<input id="productId" class="swal2-input" placeholder="Product ID">' +
+      '<input id="quantity" class="swal2-input" placeholder="Quantity">',
+    focusConfirm: false,
+    preConfirm: () => {
+      const productId = document.getElementById("productId").value;
+      const quantity = document.getElementById("quantity").value;
+
+      if (productId && quantity) {
+        handleAddItemToCart(productId, quantity);
+      } 
+    },
+  });
+};
+
 
   const handleUpdateQuantity = (id, newQuantity) => {
     const updatedItems = cartItems.map((item) =>
@@ -2353,7 +2360,6 @@ const handleFileChange = async (event) => {
             data.cartStatus === "active" ||
             data.cartStatus === "confirm" ||
             data.cartStatus === "pending_confirm";
-            console.log("Data: ",data);
 
           return (
             <div className="expandable-content">

@@ -3,8 +3,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 // import Swal from "sweetalert2";
 
-export const API_ENDPOINT = 'https://medingen.in/api/';
-// export const API_ENDPOINT = "http://localhost:8000/api/";
+// export const API_ENDPOINT = 'https://medingen.in/api/';
+export const API_ENDPOINT = "http://localhost:8000/api/";
 
 
 const handleSignOut = (navigate) => {
@@ -240,7 +240,58 @@ function generateRandomFileName() {
   return `file_${randomString}`;
 }
 
-async function uploadFile(file, prefix, random=true) {
+// async function uploadFile(file, prefix, customer_id, random=true) {
+//   try {
+//     const token = Cookies.get("jwt_token");
+
+//     // Request pre-signed URL from Flask API
+//     const response = await axios.get(API_ENDPOINT + "generate_presigned_url", {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+
+//       params: {
+//         file_name: file.name || generateRandomFileName(),
+//         content_type: file.type,
+//         prefix: prefix,
+//         random: random,
+//         customer_id: customer_id
+//       },
+//     });
+
+//     const { presigned_url, file_name } = response.data;
+
+//     // Use the pre-signed URL to upload the file to S3
+//     const uploadResponse = await axios.put(presigned_url, file, {
+//       headers: {
+//         "Content-Type": file.type,
+//       },
+//     });
+
+//     if (uploadResponse.status === 200) {
+//       console.log("File uploaded successfully with name:", file_name);
+//       return file_name;
+//     } else {
+//       // Swal.fire({
+//       //   title: "Error!",
+//       //   text: "File upload failed " + uploadResponse.statusText,
+//       //   icon: "error",
+//       //   confirmButtonText: "Okay",
+//       // });
+//     }
+//   } catch (error) {
+//     console.error("Error uploading file:", error);
+//     // Swal.fire({
+//     //   title: "Error!",
+//     //   text: "Error uploading file. Try again later",
+//     //   icon: "error",
+//     //   confirmButtonText: "Okay",
+//     // });
+//   }
+// }
+
+// Charishma 
+async function uploadFile(file, prefix, customer_id, random=true) {
   try {
     const token = Cookies.get("jwt_token");
 
@@ -254,21 +305,47 @@ async function uploadFile(file, prefix, random=true) {
         file_name: file.name || generateRandomFileName(),
         content_type: file.type,
         prefix: prefix,
-        random: random
+        random: random,
+        customer_id: customer_id
       },
     });
 
     const { presigned_url, file_name } = response.data;
 
     // Use the pre-signed URL to upload the file to S3
-    const uploadResponse = await axios.put(presigned_url, file, {
-      headers: {
-        "Content-Type": file.type,
-      },
-    });
+    // const uploadResponse = await axios.put(presigned_url, file, {
+    //   headers: {
+    //     "Content-Type": file.type,
+    //   },
+    // });
+
+    const uploadResponse={
+      status: 200,
+    }
 
     if (uploadResponse.status === 200) {
-      console.log("File uploaded successfully with name:", file_name);
+      console.log("File Uploaded Successfully...");
+
+      const s3_url = presigned_url.split("?")[0]; // Clean URL
+  const payload = {
+    prescription_image_url: s3_url,
+    prescription_date: new Date().toISOString().split("T")[0], // "YYYY-MM-DD"
+    prescription_status: "uploaded",
+    prescription_comments: "", // or user input
+    customer_id: customer_id,
+    last_used_date: null,
+    prescription_name: file.name, // or any custom name
+    associated_products: "" // or optional list if needed
+  };
+
+  // Send it to backend
+  await axios.post(API_ENDPOINT + "save_prescription", payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+  });
+
       return file_name;
     } else {
       // Swal.fire({
@@ -288,6 +365,8 @@ async function uploadFile(file, prefix, random=true) {
     // });
   }
 }
+
+// Charishma
 
 export const getAllCategories = async () => {
   const token = Cookies.get("jwt_token");
