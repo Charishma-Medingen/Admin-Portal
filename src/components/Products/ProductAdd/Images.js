@@ -73,7 +73,7 @@ function Images(props) {
                                     onChange={handleImageChange}
                                     name="file"
                                     type="file"
-                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff, .mp4, .webm, .mp3, awv, .ogg, .glb"
+                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff, .mp4, .webm, .mp3, awv, .ogg, .glb, .webp"
                                 />
                             </div>
                         </div>

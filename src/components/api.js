@@ -3,8 +3,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 // import Swal from "sweetalert2";
 
-// export const API_ENDPOINT = 'https://medingen.in/api/';
-export const API_ENDPOINT = "http://localhost:8000/api/";
+export const API_ENDPOINT = 'https://medingen.in/api/';
+// export const API_ENDPOINT = "http://localhost:8000/api/";
 
 
 const handleSignOut = (navigate) => {
